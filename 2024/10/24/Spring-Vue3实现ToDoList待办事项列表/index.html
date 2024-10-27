@@ -19,14 +19,17 @@
   <meta name="author" content="John Doe">
   <meta name="keywords" content="">
   
-    <meta property="og:type" content="article">
+    <meta name="description" content="为了熟悉spring,练习TodoList的实例,以本文记录学习过程: 1.添加相关依赖:本项目使用的是spring boot+vue3 数据库使用MySQL,持久层使用JPA 后端Api 2.建表 12345create table todo(id int auto_increment primary key ,                title varchar(50) ,">
+<meta property="og:type" content="article">
 <meta property="og:title" content="Spring  Vue3实现ToDoList待办事项列表">
 <meta property="og:url" content="http://example.com/2024/10/24/Spring-Vue3%E5%AE%9E%E7%8E%B0ToDoList%E5%BE%85%E5%8A%9E%E4%BA%8B%E9%A1%B9%E5%88%97%E8%A1%A8/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="为了熟悉spring,练习TodoList的实例,以本文记录学习过程: 1.添加相关依赖:本项目使用的是spring boot+vue3 数据库使用MySQL,持久层使用JPA 后端Api 2.建表 12345create table todo(id int auto_increment primary key ,                title varchar(50) ,">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-10-24T01:42:02.000Z">
-<meta property="article:modified_time" content="2024-10-24T01:42:02.987Z">
+<meta property="article:modified_time" content="2024-10-26T14:08:24.033Z">
 <meta property="article:author" content="John Doe">
+<meta property="article:tag" content="java spring vue3">
 <meta name="twitter:card" content="summary_large_image">
   
   
@@ -220,7 +223,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          0 字
+          362 字
         
       </span>
     
@@ -231,7 +234,7 @@
         
         
         
-          1 分钟
+          4 分钟
         
       </span>
     
@@ -273,7 +276,28 @@
             
               <div class="markdown-body">
                 
-                
+                <p>为了熟悉spring,练习TodoList的实例,以本文记录学习过程:</p>
+<p>1.添加相关依赖:本项目使用的是spring boot+vue3 数据库使用MySQL,持久层使用JPA</p>
+<p>后端Api</p>
+<p>2.建表</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs mysql">create table todo(id int auto_increment primary key ,<br>                title varchar(50) ,<br>                description varchar(100),<br>                completed boolean default false,<br>                created_at TIMESTAMP default CURRENT_TIMESTAMP);<br></code></pre></td></tr></table></figure>
+
+<p>3.application.properties配置数据库连接</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs properties"><span class="hljs-attr">spring.datasource.username</span>=<span class="hljs-string">xxx</span><br><span class="hljs-attr">spring.datasource.password</span>=<span class="hljs-string">xxx</span><br><span class="hljs-attr">spring.datasource.driver-class-name</span>=<span class="hljs-string">com.mysql.cj.jdbc.Driver</span><br><span class="hljs-attr">spring.datasource.url</span>=<span class="hljs-string">jdbc:mysql://localhost:3306/todolist</span><br></code></pre></td></tr></table></figure>
+
+<p>4.创建实体类Todo并使用JPA注解映射数据库表</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Data</span><br><span class="hljs-meta">@Entity</span><br><span class="hljs-meta">@Table(name = &quot;todo&quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Todo</span> &#123;<br>    <span class="hljs-meta">@Id</span><br>    <span class="hljs-meta">@GeneratedValue(strategy = GenerationType.IDENTITY)</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-type">int</span> id;<br><br>    <span class="hljs-keyword">private</span> String title;<br>    <span class="hljs-keyword">private</span> String description;<br>    <span class="hljs-keyword">private</span> <span class="hljs-type">boolean</span> completed;<br><br>    <span class="hljs-meta">@Temporal(TemporalType.TIMESTAMP)</span> <span class="hljs-comment">//指定create_at字段为时间戳类型</span><br>    <span class="hljs-keyword">private</span> Date create_at;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs angelscript">@Repository<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-symbol">TodoRepository</span> <span class="hljs-symbol">extends</span> <span class="hljs-symbol">JpaRepository</span>&lt;<span class="hljs-symbol">Todo</span>,<span class="hljs-symbol">Integer</span>&gt; &#123;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>4.完成TodoService,实现对Todo的操作</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-meta">@Service</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">TodoService</span> &#123;<br><br>    <span class="hljs-meta">@Autowired</span><br>    <span class="hljs-title class_">TodoRepository</span> todoRepository;<br>    <span class="hljs-title class_">Todo</span> todo;<br><br>    <span class="hljs-comment">//列出所有Todo</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-title class_">List</span>&lt;<span class="hljs-title class_">Todo</span>&gt; <span class="hljs-title function_">findAllTodo</span>(<span class="hljs-params"></span>)&#123;<br>        <span class="hljs-keyword">return</span> todoRepository.<span class="hljs-title function_">findAll</span>();<br>    &#125;<br><br>    <span class="hljs-comment">//根据id查找todo</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-title class_">Optional</span>&lt;<span class="hljs-title class_">Todo</span>&gt; <span class="hljs-title function_">finTodoById</span>(<span class="hljs-params">int id</span>)&#123; <span class="hljs-comment">//使用Optional包装,避免返回null</span><br>        <span class="hljs-keyword">return</span> todoRepository.<span class="hljs-title function_">findById</span>(id);<br>    &#125;<br><br>    <span class="hljs-comment">//添加todo</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-title class_">Todo</span> <span class="hljs-title function_">addTodo</span>(<span class="hljs-params"></span>)&#123;<br>        <span class="hljs-title class_">Todo</span> newTodo = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Todo</span>();<br>        <span class="hljs-keyword">return</span> newTodo;<br>    &#125;<br><br>    <span class="hljs-comment">//修改todo</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-built_in">void</span> <span class="hljs-title function_">updateTodo</span>(<span class="hljs-params"><span class="hljs-title class_">Todo</span> todo, <span class="hljs-title class_">String</span> title, <span class="hljs-title class_">String</span> description, <span class="hljs-built_in">boolean</span> completed</span>) &#123;<br>        todo.<span class="hljs-title function_">setTitle</span>(title);<br>        todo.<span class="hljs-title function_">setDescription</span>(description);<br>        todo.<span class="hljs-title function_">setCompleted</span>(completed);<br>    &#125;<br><br>    <span class="hljs-comment">//删除todo</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">void</span> <span class="hljs-title function_">deleteTodo</span>(<span class="hljs-params">int id</span>)&#123;<br>        <span class="hljs-keyword">if</span> (todoRepository.<span class="hljs-title function_">findById</span>(id).<span class="hljs-title function_">isPresent</span>())&#123;<br>            todoRepository.<span class="hljs-title function_">deleteById</span>(id);<br>        &#125;<br>    &#125;<br></code></pre></td></tr></table></figure>
+
+<p>5.完成TodoController,调用服务层方法,实现后端接口</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-meta">@Controller</span><br><span class="hljs-meta">@RequestMapping</span>(<span class="hljs-string">&quot;/api/todo&quot;</span>)<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">TodoController</span> &#123;<br><br>    <span class="hljs-meta">@Autowired</span><br>    <span class="hljs-title class_">TodoService</span> todoService;<br>    <span class="hljs-title class_">Todo</span> todo;<br><br>    <span class="hljs-comment">//列出所有Todo</span><br>    <span class="hljs-meta">@GetMapping</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-title class_">List</span>&lt;<span class="hljs-title class_">Todo</span>&gt; <span class="hljs-title function_">findAllTodo</span>(<span class="hljs-params"></span>)&#123;<br>        <span class="hljs-keyword">return</span> todoService.<span class="hljs-title function_">findAllTodo</span>();<br>    &#125;<br><br>    <span class="hljs-comment">//根据id查找Todo</span><br>    <span class="hljs-meta">@GetMapping</span>(<span class="hljs-string">&quot;/&#123;id&#125;&quot;</span>)<br>    <span class="hljs-keyword">public</span> <span class="hljs-title class_">Optional</span>&lt;<span class="hljs-title class_">Todo</span>&gt; <span class="hljs-title function_">findTodoById</span>(<span class="hljs-params"><span class="hljs-meta">@PathVariable</span> int id</span>)&#123;<br>        <span class="hljs-keyword">return</span> todoService.<span class="hljs-title function_">finTodoById</span>(id);<br>    &#125;<br><br>    <span class="hljs-comment">//添加Todo</span><br>    <span class="hljs-meta">@PostMapping</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-title class_">Todo</span> <span class="hljs-title function_">addTodo</span>(<span class="hljs-params"><span class="hljs-meta">@RequestBody</span> <span class="hljs-title class_">Todo</span> newTodo</span>)&#123;<br>        <span class="hljs-keyword">return</span> todoService.<span class="hljs-title function_">addTodo</span>(newTodo);<br>    &#125;<br><br>    <span class="hljs-comment">//删除Todo</span><br>    <span class="hljs-meta">@DeleteMapping</span>(<span class="hljs-string">&quot;/&#123;id&#125;&quot;</span>)<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">void</span> <span class="hljs-title function_">deleteTodo</span>(<span class="hljs-params"><span class="hljs-meta">@PathVariable</span> int id</span>)&#123;<br>       todoService.<span class="hljs-title function_">deleteTodo</span>(id);<br>    &#125;<br><br>    <span class="hljs-comment">//修改Todo</span><br>    <span class="hljs-meta">@PutMapping</span>(<span class="hljs-string">&quot;/&#123;id&#125;&quot;</span>)<br>    <span class="hljs-keyword">public</span> <span class="hljs-title class_">Todo</span> <span class="hljs-title function_">updateTodo</span>(<span class="hljs-params"><span class="hljs-meta">@PathVariable</span> int id,<span class="hljs-meta">@RequestBody</span> <span class="hljs-title class_">Todo</span> updatetodo</span>) &#123;<br>        todoService.<span class="hljs-title function_">updateTodo</span>(todo,updatetodo.<span class="hljs-title function_">getTitle</span>(), updatetodo.<span class="hljs-title function_">getDescription</span>(), updatetodo.<span class="hljs-title function_">isCompleted</span>());<br>        <span class="hljs-keyword">return</span> todo;<br>    &#125;&#125;<br></code></pre></td></tr></table></figure>
+
+<p>前端页面</p>
+
                 
               </div>
             
@@ -281,6 +305,13 @@
             <div>
               <div class="post-metas my-3">
   
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/java-spring-vue3/" class="print-no-link">#java spring vue3</a>
+      
+    </div>
   
 </div>
 

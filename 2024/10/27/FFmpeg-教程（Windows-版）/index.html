@@ -1,0 +1,710 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="FFmpeg 教程（Windows 版）FFmpeg 是一个开源的多媒体框架，用于处理音视频文件，包括转码、剪辑、合并、分割等功能。本文将为您介绍如何在 Windows 操作系统上安装和使用 FFmpeg。  FFmpeg 简介FFmpeg 是一个免费的开源项目，包含了一套用于处理音视频数据的工具和库。它支持几乎所有已知的音视频格式，并且可以执行多种复杂的操作，如转码、转封装、流媒体处理等。由于其">
+<meta property="og:type" content="article">
+<meta property="og:title" content="FFmpeg 教程（Windows 版）">
+<meta property="og:url" content="http://example.com/2024/10/27/FFmpeg-%E6%95%99%E7%A8%8B%EF%BC%88Windows-%E7%89%88%EF%BC%89/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="FFmpeg 教程（Windows 版）FFmpeg 是一个开源的多媒体框架，用于处理音视频文件，包括转码、剪辑、合并、分割等功能。本文将为您介绍如何在 Windows 操作系统上安装和使用 FFmpeg。  FFmpeg 简介FFmpeg 是一个免费的开源项目，包含了一套用于处理音视频数据的工具和库。它支持几乎所有已知的音视频格式，并且可以执行多种复杂的操作，如转码、转封装、流媒体处理等。由于其">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="c:\Users\26578\AppData\Roaming\Typora\typora-user-images\image-20241027205527078.png">
+<meta property="article:published_time" content="2024-10-27T12:53:50.000Z">
+<meta property="article:modified_time" content="2024-10-27T12:59:05.150Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="ffmpeg windos tools">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="c:\Users\26578\AppData\Roaming\Typora\typora-user-images\image-20241027205527078.png">
+  
+  
+  
+  <title>FFmpeg 教程（Windows 版） - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="FFmpeg 教程（Windows 版）"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-10-27 20:53" pubdate>
+          2024年10月27日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          964 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          9 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">FFmpeg 教程（Windows 版）</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="FFmpeg-教程（Windows-版）"><a href="#FFmpeg-教程（Windows-版）" class="headerlink" title="FFmpeg 教程（Windows 版）"></a>FFmpeg 教程（Windows 版）</h1><p>FFmpeg 是一个开源的多媒体框架，用于处理音视频文件，包括转码、剪辑、合并、分割等功能。本文将为您介绍如何在 Windows 操作系统上安装和使用 FFmpeg。</p>
+<hr>
+<h2 id="FFmpeg-简介"><a href="#FFmpeg-简介" class="headerlink" title="FFmpeg 简介"></a>FFmpeg 简介</h2><p>FFmpeg 是一个免费的开源项目，包含了一套用于处理音视频数据的工具和库。它支持几乎所有已知的音视频格式，并且可以执行多种复杂的操作，如转码、转封装、流媒体处理等。由于其强大的功能和灵活性，FFmpeg 被广泛应用于各种多媒体项目中。</p>
+<h2 id="下载-FFmpeg"><a href="#下载-FFmpeg" class="headerlink" title="下载 FFmpeg"></a>下载 FFmpeg</h2><ol>
+<li><strong>访问官方网站</strong>：前往 FFmpeg 的官方网站 <a target="_blank" rel="noopener" href="https://ffmpeg.org/download.html%E3%80%82">https://ffmpeg.org/download.html。</a></li>
+<li><strong>选择 Windows 版本</strong>：在“Get packages &amp; executable files”部分，点击 Windows 的图标，进入 Windows 版本的下载页面。</li>
+<li><strong>选择预编译版本</strong>：推荐使用 Gyan.dev 或 <a target="_blank" rel="noopener" href="https://github.com/BtbN/FFmpeg-Builds/releases">BtbN</a> 提供的预编译版本。</li>
+<li><strong>下载压缩包</strong>：选择适合您系统的版本（通常为 <code>ffmpeg-release-essentials.zip</code> 或类似名称的文件），点击下载。</li>
+</ol>
+<h2 id="安装-FFmpeg"><a href="#安装-FFmpeg" class="headerlink" title="安装 FFmpeg"></a>安装 FFmpeg</h2><ol>
+<li><p><strong>解压压缩包</strong>：将下载的压缩包解压到您希望安装 FFmpeg 的目录，例如 <code>C:\ffmpeg</code>。</p>
+</li>
+<li><p><strong>文件结构</strong>：解压后，您应该看到类似以下的文件夹结构：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs stylus">makefile复制代码C:\ffmpeg<br>├── bin<br>│   ├── ffmpeg<span class="hljs-selector-class">.exe</span><br>│   ├── ffplay<span class="hljs-selector-class">.exe</span><br>│   └── ffprobe<span class="hljs-selector-class">.exe</span><br>├── docs<br>└── ...（其他文件夹）<br></code></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="配置环境变量"><a href="#配置环境变量" class="headerlink" title="配置环境变量"></a>配置环境变量</h2><p>为了在命令提示符（CMD）或 PowerShell 中随时使用 FFmpeg 命令，建议将 FFmpeg 的 <code>bin</code> 目录添加到系统的环境变量中。</p>
+<ol>
+<li><p><strong>打开环境变量设置</strong>：</p>
+<ul>
+<li>右键点击“此电脑”或“我的电脑”，选择“属性”。</li>
+<li>点击左侧的“高级系统设置”。</li>
+<li>在“系统属性”窗口中，点击“环境变量”按钮。</li>
+</ul>
+</li>
+<li><p><strong>编辑 PATH 变量</strong>：</p>
+<ul>
+<li>在“系统变量”区域，找到并选中 <code>Path</code>，然后点击“编辑”。</li>
+<li>点击“新建”，然后输入 FFmpeg 的 <code>bin</code> 目录路径，例如 <code>C:\ffmpeg\bin</code>。</li>
+<li>确认所有窗口以保存设置。</li>
+</ul>
+</li>
+<li><p><strong>验证安装</strong>：</p>
+<ul>
+<li><p>打开命令提示符（CMD）或 PowerShell。</p>
+</li>
+<li><p>输入以下命令并回车：</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmd">ffmpeg -version<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>如果安装成功，您将看到 FFmpeg 的版本信息。<img src="C:\Users\26578\AppData\Roaming\Typora\typora-user-images\image-20241027205527078.png" srcset="/img/loading.gif" lazyload alt="image-20241027205527078"></p>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="基本使用方法"><a href="#基本使用方法" class="headerlink" title="基本使用方法"></a>基本使用方法</h2><p>以下是一些常用的 FFmpeg 命令示例，帮助您快速上手.</p>
+<h3 id="查看版本信息"><a href="#查看版本信息" class="headerlink" title="查看版本信息"></a>查看版本信息</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ffmpeg -version<br></code></pre></td></tr></table></figure>
+
+<h3 id="视频格式转换"><a href="#视频格式转换" class="headerlink" title="视频格式转换"></a>视频格式转换</h3><p>将一个视频文件从一种格式转换为另一种格式。例如，将 <code>input.mp4</code> 转换为 <code>output.avi</code>：</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmd">ffmpeg -i input.mp4 output.avi<br></code></pre></td></tr></table></figure>
+
+<h3 id="提取音频"><a href="#提取音频" class="headerlink" title="提取音频"></a>提取音频</h3><p>从视频文件中提取音频，保存为 MP3 格式：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stylus">ffmpeg -<span class="hljs-selector-tag">i</span> <span class="hljs-selector-tag">input</span><span class="hljs-selector-class">.mp4</span> -<span class="hljs-selector-tag">q</span>:<span class="hljs-selector-tag">a</span> <span class="hljs-number">0</span> -map <span class="hljs-selector-tag">a</span> output.mp3<br></code></pre></td></tr></table></figure>
+
+<h3 id="视频剪辑"><a href="#视频剪辑" class="headerlink" title="视频剪辑"></a>视频剪辑</h3><p>剪切视频的一部分。例如，截取 <code>input.mp4</code> 从第 00:01:00 到第 00:02:00 的部分：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">ffmpeg</span> -ss <span class="hljs-number">00</span>:<span class="hljs-number">01</span>:<span class="hljs-number">00</span> -i input.mp4 -to <span class="hljs-number">00</span>:<span class="hljs-number">02</span>:<span class="hljs-number">00</span> -c copy output.mp4<br></code></pre></td></tr></table></figure>
+
+<h3 id="合并视频文件"><a href="#合并视频文件" class="headerlink" title="合并视频文件"></a>合并视频文件</h3><p>将多个视频文件合并为一个。首先，创建一个文本文件 <code>filelist.txt</code>，内容如下：</p>
+<figure class="highlight delphi"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs delphi"><span class="hljs-keyword">file</span> <span class="hljs-string">&#x27;video1.mp4&#x27;</span><br><span class="hljs-keyword">file</span> <span class="hljs-string">&#x27;video2.mp4&#x27;</span><br><span class="hljs-keyword">file</span> <span class="hljs-string">&#x27;video3.mp4&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<p>然后运行命令：</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs lua">ffmpeg -f <span class="hljs-built_in">concat</span> -safe <span class="hljs-number">0</span> -i filelist.txt -c copy <span class="hljs-built_in">output</span>.mp4<br></code></pre></td></tr></table></figure>
+
+<h3 id="转换视频编码"><a href="#转换视频编码" class="headerlink" title="转换视频编码"></a>转换视频编码</h3><p>将视频编码转换为 H.264 编码，音频编码为 AAC：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stylus">ffmpeg -<span class="hljs-selector-tag">i</span> <span class="hljs-selector-tag">input</span><span class="hljs-selector-class">.mkv</span> -c:v libx264 -c:<span class="hljs-selector-tag">a</span> aac output.mp4<br></code></pre></td></tr></table></figure>
+
+<h3 id="调整视频分辨率"><a href="#调整视频分辨率" class="headerlink" title="调整视频分辨率"></a>调整视频分辨率</h3><p>将视频分辨率调整为 1280x720：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">ffmpeg</span> -i input.mp4 -vf scale=<span class="hljs-number">1280</span>:<span class="hljs-number">720</span> output.mp4<br></code></pre></td></tr></table></figure>
+
+<h3 id="压缩视频文件大小"><a href="#压缩视频文件大小" class="headerlink" title="压缩视频文件大小"></a>压缩视频文件大小</h3><p>通过调整比特率来压缩视频文件：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stylus">ffmpeg -<span class="hljs-selector-tag">i</span> <span class="hljs-selector-tag">input</span><span class="hljs-selector-class">.mp4</span> -<span class="hljs-selector-tag">b</span>:v <span class="hljs-number">1000</span>k -<span class="hljs-selector-tag">b</span>:<span class="hljs-selector-tag">a</span> <span class="hljs-number">128</span>k output.mp4<br></code></pre></td></tr></table></figure>
+
+<h3 id="添加字幕"><a href="#添加字幕" class="headerlink" title="添加字幕"></a>添加字幕</h3><p>将外部字幕文件（如 SRT）嵌入到视频中：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stylus">ffmpeg -<span class="hljs-selector-tag">i</span> <span class="hljs-selector-tag">input</span><span class="hljs-selector-class">.mp4</span> -<span class="hljs-selector-tag">i</span> subtitles<span class="hljs-selector-class">.srt</span> -c copy -c:s mov_text output.mp4<br></code></pre></td></tr></table></figure>
+
+<h3 id="录制屏幕"><a href="#录制屏幕" class="headerlink" title="录制屏幕"></a>录制屏幕</h3><p>录制全屏视频，保存为 <code>output.mp4</code>：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">ffmpeg</span> -f gdigrab -framerate <span class="hljs-number">30</span> -i desktop output.mp4<br></code></pre></td></tr></table></figure>
+
+<h2 id="高级使用"><a href="#高级使用" class="headerlink" title="高级使用"></a>高级使用</h2><p>FFmpeg 具有极其丰富的功能，以下是一些高级应用场景：</p>
+<h3 id="流媒体推流"><a href="#流媒体推流" class="headerlink" title="流媒体推流"></a>流媒体推流</h3><p>将视频流推送到 RTMP 服务器：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs stylus">bash<br><br><br>复制代码<br>ffmpeg -re -<span class="hljs-selector-tag">i</span> <span class="hljs-selector-tag">input</span><span class="hljs-selector-class">.mp4</span> -c:v libx264 -preset veryfast -maxrate <span class="hljs-number">3000</span>k -bufsize <span class="hljs-number">6000</span>k -c:<span class="hljs-selector-tag">a</span> aac -<span class="hljs-selector-tag">b</span>:<span class="hljs-selector-tag">a</span> <span class="hljs-number">160</span>k -f flv rtmp:<span class="hljs-comment">//yourserver/live/stream</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="视频水印"><a href="#视频水印" class="headerlink" title="视频水印"></a>视频水印</h3><p>在视频上添加图片水印：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs stylus">bash<br><br><br>复制代码<br>ffmpeg -<span class="hljs-selector-tag">i</span> <span class="hljs-selector-tag">input</span><span class="hljs-selector-class">.mp4</span> -<span class="hljs-selector-tag">i</span> watermark<span class="hljs-selector-class">.png</span> -filter_complex <span class="hljs-string">&quot;overlay=10:10&quot;</span> output.mp4<br></code></pre></td></tr></table></figure>
+
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://ffmpeg.org/documentation.html">FFmpeg 官方文档</a></li>
+<li><a target="_blank" rel="noopener" href="https://ffmpeg.org.cn/">FFmpeg 中文网</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.ffmpeg.org/ffmpeg.html">FFmpeg 命令大全</a></li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/ffmpeg-windos-tools/" class="print-no-link">#ffmpeg windos tools</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>FFmpeg 教程（Windows 版）</div>
+      <div>http://example.com/2024/10/27/FFmpeg-教程（Windows-版）/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>John Doe</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年10月27日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/10/27/WSL2%E5%AE%89%E8%A3%85docker%E5%92%8C%E9%85%8D%E7%BD%AEdocker-compose%E5%B9%B6%E7%BC%96%E6%8E%92%E6%9C%8D%E5%8A%A1/" title="WSL2安装docker和配置docker compose并编排服务">
+                        <span class="hidden-mobile">WSL2安装docker和配置docker compose并编排服务</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
