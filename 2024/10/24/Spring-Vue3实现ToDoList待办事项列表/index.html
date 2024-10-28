@@ -27,9 +27,9 @@
 <meta property="og:description" content="为了熟悉spring,练习TodoList的实例,以本文记录学习过程: 1.添加相关依赖:本项目使用的是spring boot+vue3 数据库使用MySQL,持久层使用JPA 后端Api 2.建表 12345create table todo(id int auto_increment primary key ,                title varchar(50) ,">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-10-24T01:42:02.000Z">
-<meta property="article:modified_time" content="2024-10-26T14:08:24.033Z">
+<meta property="article:modified_time" content="2024-10-28T02:55:18.209Z">
 <meta property="article:author" content="John Doe">
-<meta property="article:tag" content="java spring vue3">
+<meta property="article:tag" content="java, spring, vue3">
 <meta name="twitter:card" content="summary_large_image">
   
   
@@ -223,7 +223,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          362 字
+          575 字
         
       </span>
     
@@ -234,7 +234,7 @@
         
         
         
-          4 分钟
+          5 分钟
         
       </span>
     
@@ -297,6 +297,40 @@
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-meta">@Controller</span><br><span class="hljs-meta">@RequestMapping</span>(<span class="hljs-string">&quot;/api/todo&quot;</span>)<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">TodoController</span> &#123;<br><br>    <span class="hljs-meta">@Autowired</span><br>    <span class="hljs-title class_">TodoService</span> todoService;<br>    <span class="hljs-title class_">Todo</span> todo;<br><br>    <span class="hljs-comment">//列出所有Todo</span><br>    <span class="hljs-meta">@GetMapping</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-title class_">List</span>&lt;<span class="hljs-title class_">Todo</span>&gt; <span class="hljs-title function_">findAllTodo</span>(<span class="hljs-params"></span>)&#123;<br>        <span class="hljs-keyword">return</span> todoService.<span class="hljs-title function_">findAllTodo</span>();<br>    &#125;<br><br>    <span class="hljs-comment">//根据id查找Todo</span><br>    <span class="hljs-meta">@GetMapping</span>(<span class="hljs-string">&quot;/&#123;id&#125;&quot;</span>)<br>    <span class="hljs-keyword">public</span> <span class="hljs-title class_">Optional</span>&lt;<span class="hljs-title class_">Todo</span>&gt; <span class="hljs-title function_">findTodoById</span>(<span class="hljs-params"><span class="hljs-meta">@PathVariable</span> int id</span>)&#123;<br>        <span class="hljs-keyword">return</span> todoService.<span class="hljs-title function_">finTodoById</span>(id);<br>    &#125;<br><br>    <span class="hljs-comment">//添加Todo</span><br>    <span class="hljs-meta">@PostMapping</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-title class_">Todo</span> <span class="hljs-title function_">addTodo</span>(<span class="hljs-params"><span class="hljs-meta">@RequestBody</span> <span class="hljs-title class_">Todo</span> newTodo</span>)&#123;<br>        <span class="hljs-keyword">return</span> todoService.<span class="hljs-title function_">addTodo</span>(newTodo);<br>    &#125;<br><br>    <span class="hljs-comment">//删除Todo</span><br>    <span class="hljs-meta">@DeleteMapping</span>(<span class="hljs-string">&quot;/&#123;id&#125;&quot;</span>)<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">void</span> <span class="hljs-title function_">deleteTodo</span>(<span class="hljs-params"><span class="hljs-meta">@PathVariable</span> int id</span>)&#123;<br>       todoService.<span class="hljs-title function_">deleteTodo</span>(id);<br>    &#125;<br><br>    <span class="hljs-comment">//修改Todo</span><br>    <span class="hljs-meta">@PutMapping</span>(<span class="hljs-string">&quot;/&#123;id&#125;&quot;</span>)<br>    <span class="hljs-keyword">public</span> <span class="hljs-title class_">Todo</span> <span class="hljs-title function_">updateTodo</span>(<span class="hljs-params"><span class="hljs-meta">@PathVariable</span> int id,<span class="hljs-meta">@RequestBody</span> <span class="hljs-title class_">Todo</span> updatetodo</span>) &#123;<br>        todoService.<span class="hljs-title function_">updateTodo</span>(todo,updatetodo.<span class="hljs-title function_">getTitle</span>(), updatetodo.<span class="hljs-title function_">getDescription</span>(), updatetodo.<span class="hljs-title function_">isCompleted</span>());<br>        <span class="hljs-keyword">return</span> todo;<br>    &#125;&#125;<br></code></pre></td></tr></table></figure>
 
 <p>前端页面</p>
+<template>
+   <div class="todo-list">
+     <h1>待办事项</h1>
+     <form @submit.prevent="addTodo">
+       <input v-model="newTodo.title" placeholder="标题" required />
+       <input v-model="newTodo.description" placeholder="描述" />
+       <button type="submit">添加</button>
+     </form>
+     <ul>
+       <li v-for="todo in todos" :key="todo.id">
+         <span :class="{ completed: todo.completed }">
+            - 
+         </span>
+         <button @click="toggleComplete(todo)">完成</button>
+         <button @click="deleteTodo(todo.id)">删除</button>
+       </li>
+     </ul>
+   </div>
+</template>
+
+<script>
+ import axios from 'axios';
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><code class="hljs javascript"> <span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;<br>   <span class="hljs-title function_">data</span>(<span class="hljs-params"></span>) &#123;<br>     <span class="hljs-keyword">return</span> &#123;<br>       <span class="hljs-attr">todos</span>: [],<br>       <span class="hljs-attr">newTodo</span>: &#123;<br>         <span class="hljs-attr">title</span>: <span class="hljs-string">&#x27;&#x27;</span>,<br>         <span class="hljs-attr">description</span>: <span class="hljs-string">&#x27;&#x27;</span>,<br>         <span class="hljs-attr">completed</span>: <span class="hljs-literal">false</span><br>       &#125;<br>     &#125;;<br>   &#125;,<br>   <span class="hljs-title function_">created</span>(<span class="hljs-params"></span>) &#123; <span class="hljs-comment">// 移到根对象</span><br>     <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">fetchTodos</span>();<br>   &#125;,<br>   <span class="hljs-attr">methods</span>: &#123;<br>     <span class="hljs-keyword">async</span> <span class="hljs-title function_">fetchTodos</span>(<span class="hljs-params"></span>) &#123;<br>       <span class="hljs-keyword">try</span> &#123;<br>         <span class="hljs-keyword">const</span> response = <span class="hljs-keyword">await</span> axios.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#x27;http://localhost:8080/api/todo/all&#x27;</span>);<br>         <span class="hljs-variable language_">this</span>.<span class="hljs-property">todos</span> = response.<span class="hljs-property">data</span>;<br>       &#125; <span class="hljs-keyword">catch</span> (error) &#123;<br>         <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(error);<br>       &#125;<br>     &#125;,<br>     <span class="hljs-keyword">async</span> <span class="hljs-title function_">addTodo</span>(<span class="hljs-params"></span>) &#123;<br>       <span class="hljs-keyword">try</span> &#123;<br>         <span class="hljs-keyword">const</span> response = <span class="hljs-keyword">await</span> axios.<span class="hljs-title function_">post</span>(<span class="hljs-string">&#x27;http://localhost:8080/api/todo&#x27;</span>, <span class="hljs-variable language_">this</span>.<span class="hljs-property">newTodo</span>);<br>         <span class="hljs-variable language_">this</span>.<span class="hljs-property">todos</span>.<span class="hljs-title function_">push</span>(response.<span class="hljs-property">data</span>);<br>         <span class="hljs-variable language_">this</span>.<span class="hljs-property">newTodo</span> = &#123;<br>           <span class="hljs-attr">title</span>: <span class="hljs-string">&#x27;&#x27;</span>,<br>           <span class="hljs-attr">description</span>: <span class="hljs-string">&#x27;&#x27;</span>,<br>           <span class="hljs-attr">completed</span>: <span class="hljs-literal">false</span><br>         &#125;;<br>       &#125; <span class="hljs-keyword">catch</span> (error) &#123;<br>         <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(error);<br>       &#125;<br>     &#125;,<br>     <span class="hljs-keyword">async</span> <span class="hljs-title function_">toggleComplete</span>(<span class="hljs-params">todo</span>) &#123;<br>       <span class="hljs-keyword">try</span> &#123;<br>         <span class="hljs-keyword">const</span> updatedTodo = &#123; ...todo, <span class="hljs-attr">completed</span>: !todo.<span class="hljs-property">completed</span> &#125;;<br>         <span class="hljs-keyword">await</span> axios.<span class="hljs-title function_">put</span>(<span class="hljs-string">`http://localhost:8080/api/todo/<span class="hljs-subst">$&#123;todo.id&#125;</span>`</span>, updatedTodo);<br>         <span class="hljs-keyword">const</span> insex = <span class="hljs-variable language_">this</span>.<span class="hljs-property">todos</span>.<span class="hljs-title function_">indexOf</span>(todo);<br>         <span class="hljs-variable language_">this</span>.<span class="hljs-property">todos</span>.<span class="hljs-title function_">splice</span>(insex, <span class="hljs-number">1</span>, updatedTodo); <span class="hljs-comment">// 使用正确的变量名</span><br>       &#125; <span class="hljs-keyword">catch</span> (error) &#123;<br>         <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(error);<br>       &#125;<br>     &#125;,<br>     <span class="hljs-keyword">async</span> <span class="hljs-title function_">deleteTodo</span>(<span class="hljs-params">id</span>) &#123;<br>       <span class="hljs-keyword">try</span> &#123;<br>         <span class="hljs-keyword">await</span> axios.<span class="hljs-title function_">delete</span>(<span class="hljs-string">`http://localhost:8080/api/todo/<span class="hljs-subst">$&#123;id&#125;</span>`</span>);<br>         <span class="hljs-variable language_">this</span>.<span class="hljs-property">todos</span> = <span class="hljs-variable language_">this</span>.<span class="hljs-property">todos</span>.<span class="hljs-title function_">filter</span>(<span class="hljs-function"><span class="hljs-params">todo</span> =&gt;</span> todo.<span class="hljs-property">id</span> !== id);<br>       &#125; <span class="hljs-keyword">catch</span> (error) &#123;<br>         <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(error);<br>       &#125;<br>     &#125;<br>   &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+</script>
+
+<style scoped>
+#app {
+ height: 90vh;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+}
+</style>
 
                 
               </div>
@@ -309,7 +343,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/java-spring-vue3/" class="print-no-link">#java spring vue3</a>
+        <a href="/tags/java-spring-vue3/" class="print-no-link">#java, spring, vue3</a>
       
     </div>
   
