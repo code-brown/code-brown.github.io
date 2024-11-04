@@ -16,7 +16,7 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
   <meta name="theme-color" content="#2f4154">
-  <meta name="author" content="John Doe">
+  <meta name="author" content="ming">
   <meta name="keywords" content="">
   
     <meta name="description" content="最近学习JWT时遇到许多方法显示已弃用,JWT更新速度非常快,网上的教程和AI回复大多缺乏时效性,因此我记录下更新学习的过程;本文参考JWT GitHub首页: https:&#x2F;&#x2F;github.com&#x2F;jwtk&#x2F;jjwt?tab&#x3D;readme-ov-file ;并感谢ChatGPT提供了详尽的解释. JWT基础知识: JWT (JSON Web Token):** 是一种基于JSON的令牌，用于在网">
@@ -27,8 +27,8 @@
 <meta property="og:description" content="最近学习JWT时遇到许多方法显示已弃用,JWT更新速度非常快,网上的教程和AI回复大多缺乏时效性,因此我记录下更新学习的过程;本文参考JWT GitHub首页: https:&#x2F;&#x2F;github.com&#x2F;jwtk&#x2F;jjwt?tab&#x3D;readme-ov-file ;并感谢ChatGPT提供了详尽的解释. JWT基础知识: JWT (JSON Web Token):** 是一种基于JSON的令牌，用于在网">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-10-24T01:57:07.000Z">
-<meta property="article:modified_time" content="2024-10-25T15:21:37.932Z">
-<meta property="article:author" content="John Doe">
+<meta property="article:modified_time" content="2024-11-01T13:13:28.548Z">
+<meta property="article:author" content="ming">
 <meta property="article:tag" content="java Spring JWT">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -223,7 +223,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          807 字
+          786 字
         
       </span>
     
@@ -292,12 +292,12 @@
 <tbody><tr>
 <td align="left"><strong>Header</strong></td>
 <td>定义了JWT的元数据，主要包括签名算法和令牌类型。</td>
-<td><code>json&lt;br&gt;&#123;&lt;br&gt; &quot;alg&quot;: &quot;HS256&quot;,&lt;br&gt; &quot;typ&quot;: &quot;JWT&quot;&lt;br&gt;&#125;</code></td>
+<td><code>json&lt;br&gt;&#123; &quot;alg&quot;: &quot;HS256&quot;,&lt;br&gt; &quot;typ&quot;: &quot;JWT&quot;&#125;</code></td>
 </tr>
 <tr>
 <td align="left"><strong>Payload</strong></td>
 <td>包含实际传递的数据（声明），可以包括注册声明、公共声明和私有声明。</td>
-<td><code>json&lt;br&gt;&#123;&lt;br&gt; &quot;sub&quot;: &quot;1234567890&quot;,&lt;br&gt; &quot;name&quot;: &quot;John Doe&quot;,&lt;br&gt; &quot;admin&quot;: true,&lt;br&gt; &quot;exp&quot;: 1516239022&lt;br&gt;&#125;</code></td>
+<td><code>json&#123; &quot;sub&quot;: &quot;1234567890&quot;, &quot;name&quot;: &quot;John Doe&quot;,&quot;admin&quot;: true, &quot;exp&quot;: 1516239022&lt;br&gt;&#125;</code></td>
 </tr>
 <tr>
 <td align="left"><strong>Signature</strong></td>
@@ -348,7 +348,7 @@
       
         <div class="license-meta-item">
           <div>作者</div>
-          <div>John Doe</div>
+          <div>ming</div>
         </div>
       
       
