@@ -1,0 +1,806 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="ming">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="#本文由AI辅助完成   目录 安装与基础验证 虚拟主机配置 SSL&#x2F;TLS 加密 常用模块管理 日志与日志轮转 安全加固 性能调优 反向代理与负载均衡 常见问题与故障排查 扩展工具与集成建议   一、安装与基础验证1. 使用包管理器安装CentOS&#x2F;RHEL 系列 更新仓库缓存   1sudo yum makecache fast  刷新本地元数据缓存，确保获取最新软件包信">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Apache运维综合配置教程">
+<meta property="og:url" content="http://example.com/2025/05/14/Apache%E8%BF%90%E7%BB%B4%E7%BB%BC%E5%90%88%E9%85%8D%E7%BD%AE%E6%95%99%E7%A8%8B/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="#本文由AI辅助完成   目录 安装与基础验证 虚拟主机配置 SSL&#x2F;TLS 加密 常用模块管理 日志与日志轮转 安全加固 性能调优 反向代理与负载均衡 常见问题与故障排查 扩展工具与集成建议   一、安装与基础验证1. 使用包管理器安装CentOS&#x2F;RHEL 系列 更新仓库缓存   1sudo yum makecache fast  刷新本地元数据缓存，确保获取最新软件包信">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-05-14T07:00:38.000Z">
+<meta property="article:modified_time" content="2025-05-14T07:05:10.361Z">
+<meta property="article:author" content="ming">
+<meta property="article:tag" content="-Linxu -Apache">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>Apache运维综合配置教程 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":80,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Apache运维综合配置教程"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-05-14 15:00" pubdate>
+          2025年5月14日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.3k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          11 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Apache运维综合配置教程</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <blockquote>
+<p>#本文由AI辅助完成</p>
+</blockquote>
+<hr>
+<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ol>
+<li><a href="#%E4%B8%80%E5%AE%89%E8%A3%85%E4%B8%8E%E5%9F%BA%E7%A1%80%E9%AA%8C%E8%AF%81">安装与基础验证</a></li>
+<li><a href="#%E4%BA%8C%E8%99%9A%E6%8B%9F%E4%B8%BB%E6%9C%BA%E9%85%8D%E7%BD%AE">虚拟主机配置</a></li>
+<li><a href="#%E4%B8%89ssltls-%E5%8A%A0%E5%AF%86">SSL&#x2F;TLS 加密</a></li>
+<li><a href="#%E5%9B%9B%E5%B8%B8%E7%94%A8%E6%A8%A1%E5%9D%97%E7%AE%A1%E7%90%86">常用模块管理</a></li>
+<li><a href="#%E4%BA%94%E6%97%A5%E5%BF%97%E4%B8%8E%E6%97%A5%E5%BF%97%E8%BD%AE%E8%BD%AC">日志与日志轮转</a></li>
+<li><a href="#%E5%85%AD%E5%AE%89%E5%85%A8%E5%8A%A0%E5%9B%BA">安全加固</a></li>
+<li><a href="#%E4%B8%83%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98">性能调优</a></li>
+<li><a href="#%E5%85%AB%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E4%B8%8E%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1">反向代理与负载均衡</a></li>
+<li><a href="#%E4%B9%9D%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E4%B8%8E%E6%95%85%E9%9A%9C%E6%8E%92%E6%9F%A5">常见问题与故障排查</a></li>
+<li><a href="#%E5%8D%81%E6%89%A9%E5%B1%95%E5%B7%A5%E5%85%B7%E4%B8%8E%E9%9B%86%E6%88%90%E5%BB%BA%E8%AE%AE">扩展工具与集成建议</a></li>
+</ol>
+<hr>
+<h2 id="一、安装与基础验证"><a href="#一、安装与基础验证" class="headerlink" title="一、安装与基础验证"></a>一、安装与基础验证</h2><h3 id="1-使用包管理器安装"><a href="#1-使用包管理器安装" class="headerlink" title="1. 使用包管理器安装"></a>1. 使用包管理器安装</h3><h4 id="CentOS-RHEL-系列"><a href="#CentOS-RHEL-系列" class="headerlink" title="CentOS&#x2F;RHEL 系列"></a>CentOS&#x2F;RHEL 系列</h4><ol>
+<li><p><strong>更新仓库缓存</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> yum makecache fast<br></code></pre></td></tr></table></figure>
+<ul>
+<li>刷新本地元数据缓存，确保获取最新软件包信息。</li>
+</ul>
+</li>
+<li><p><strong>安装 Apache 包</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> yum install -y httpd<br></code></pre></td></tr></table></figure>
+<ul>
+<li><code>-y</code> 自动确认，适合脚本化部署。</li>
+</ul>
+</li>
+<li><p><strong>设置开机自启</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> systemctl <span class="hljs-built_in">enable</span> httpd<br></code></pre></td></tr></table></figure>
+<ul>
+<li>将 httpd 服务加入 systemd 启动列表。</li>
+</ul>
+</li>
+<li><p><strong>启动服务并检查状态</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> systemctl start httpd<br><span class="hljs-built_in">sudo</span> systemctl status httpd<br></code></pre></td></tr></table></figure>
+<ul>
+<li><code>status</code> 命令可返回服务当前状态和最近日志条目。</li>
+</ul>
+</li>
+<li><p><strong>放行防火墙端口（可选）</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> firewall-cmd --permanent --add-service=http<br><span class="hljs-built_in">sudo</span> firewall-cmd --permanent --add-service=https<br><span class="hljs-built_in">sudo</span> firewall-cmd --reload<br></code></pre></td></tr></table></figure>
+<ul>
+<li><code>firewall-cmd</code> 是 firewalld 的命令行工具。</li>
+</ul>
+</li>
+</ol>
+<h4 id="Debian-Ubuntu-系列"><a href="#Debian-Ubuntu-系列" class="headerlink" title="Debian&#x2F;Ubuntu 系列"></a>Debian&#x2F;Ubuntu 系列</h4><ol>
+<li><strong>更新软件源索引</strong>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> apt update<br></code></pre></td></tr></table></figure></li>
+<li><strong>安装 Apache2</strong>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> apt install -y apache2<br></code></pre></td></tr></table></figure></li>
+<li><strong>启动服务并设置自启</strong>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> systemctl start apache2<br><span class="hljs-built_in">sudo</span> systemctl <span class="hljs-built_in">enable</span> apache2<br></code></pre></td></tr></table></figure></li>
+<li><strong>查看服务状态</strong>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> systemctl status apache2<br></code></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="2-验证安装"><a href="#2-验证安装" class="headerlink" title="2. 验证安装"></a>2. 验证安装</h3><ul>
+<li><p>在浏览器中访问 <code>http://&lt;服务器IP或域名&gt;/</code>。<br>-输出示例：</p>
+<ul>
+<li>CentOS&#x2F;RHEL: “Apache HTTP Server Test Page”</li>
+<li>Debian&#x2F;Ubuntu: “Apache2 Debian Default Page”</li>
+</ul>
+</li>
+<li><p>如果未显示，检查端口监听状态：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> ss -tuln | grep <span class="hljs-string">&#x27;:80&#x27;</span><br></code></pre></td></tr></table></figure></li>
+</ul>
+<hr>
+<h2 id="二、虚拟主机配置"><a href="#二、虚拟主机配置" class="headerlink" title="二、虚拟主机配置"></a>二、虚拟主机配置</h2><blockquote>
+<p>使用 VirtualHost 可在一台服务器上托管多个站点，按域名或 IP 区分不同内容。</p>
+</blockquote>
+<h3 id="1-准备文档根目录"><a href="#1-准备文档根目录" class="headerlink" title="1. 准备文档根目录"></a>1. 准备文档根目录</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> <span class="hljs-built_in">mkdir</span> -p /var/www/html/example<br><span class="hljs-built_in">sudo</span> <span class="hljs-built_in">mkdir</span> -p /var/www/html/shop<br><span class="hljs-built_in">sudo</span> <span class="hljs-built_in">chown</span> -R <span class="hljs-variable">$USER</span>:<span class="hljs-variable">$USER</span> /var/www/html/example /var/www/html/shop<br><span class="hljs-built_in">sudo</span> <span class="hljs-built_in">chmod</span> -R 755 /var/www/html<br></code></pre></td></tr></table></figure>
+<ul>
+<li><code>chown</code>：更改目录所有者  </li>
+<li><code>chmod 755</code>：用户读写执行，组和其他用户只读执行</li>
+</ul>
+<h3 id="2-创建测试页面"><a href="#2-创建测试页面" class="headerlink" title="2. 创建测试页面"></a>2. 创建测试页面</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;&lt;h1&gt;Welcome to Example Site&lt;/h1&gt;&quot;</span> &gt; /var/www/html/example/index.html<br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;&lt;h1&gt;Welcome to Shop Site&lt;/h1&gt;&quot;</span> &gt; /var/www/html/shop/index.html<br></code></pre></td></tr></table></figure>
+
+<h3 id="3-配置虚拟主机"><a href="#3-配置虚拟主机" class="headerlink" title="3. 配置虚拟主机"></a>3. 配置虚拟主机</h3><p>编辑 <code>vhosts.conf</code>：</p>
+<ul>
+<li>RHEL&#x2F;CentOS: <code>/etc/httpd/conf.d/vhosts.conf</code>  </li>
+<li>Debian&#x2F;Ubuntu: <code>/etc/apache2/sites-available/vhosts.conf</code></li>
+</ul>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-section">&lt;VirtualHost *<span class="hljs-number">:80</span>&gt;</span><br>    <span class="hljs-attribute">ServerName</span> www.example.com<br>    <span class="hljs-attribute">ServerAlias</span> example.com<br>    <span class="hljs-attribute">DocumentRoot</span> /var/www/html/example<br>    <span class="hljs-section">&lt;Directory /var/www/html/example&gt;</span><br>        <span class="hljs-attribute">Options</span> Indexes FollowSymLinks<br>        <span class="hljs-attribute">AllowOverride</span> <span class="hljs-literal">All</span><br>        <span class="hljs-attribute">Require</span> <span class="hljs-literal">all</span> granted<br>    <span class="hljs-section">&lt;/Directory&gt;</span><br>    <span class="hljs-attribute">ErrorLog</span> <span class="hljs-variable">$&#123;APACHE_LOG_DIR&#125;</span>/example_error.log<br>    <span class="hljs-attribute">CustomLog</span> <span class="hljs-variable">$&#123;APACHE_LOG_DIR&#125;</span>/example_access.log combined<br><span class="hljs-section">&lt;/VirtualHost&gt;</span><br><br><span class="hljs-section">&lt;VirtualHost *<span class="hljs-number">:80</span>&gt;</span><br>    <span class="hljs-attribute">ServerName</span> shop.example.com<br>    <span class="hljs-attribute">ServerAlias</span> shop.example.com<br>    <span class="hljs-attribute">DocumentRoot</span> /var/www/html/shop<br>    <span class="hljs-section">&lt;Directory /var/www/html/shop&gt;</span><br>        <span class="hljs-attribute">Options</span> Indexes FollowSymLinks<br>        <span class="hljs-attribute">AllowOverride</span> <span class="hljs-literal">All</span><br>        <span class="hljs-attribute">Require</span> <span class="hljs-literal">all</span> granted<br>    <span class="hljs-section">&lt;/Directory&gt;</span><br>    <span class="hljs-attribute">ErrorLog</span> <span class="hljs-variable">$&#123;APACHE_LOG_DIR&#125;</span>/shop_error.log<br>    <span class="hljs-attribute">CustomLog</span> <span class="hljs-variable">$&#123;APACHE_LOG_DIR&#125;</span>/shop_access.log combined<br><span class="hljs-section">&lt;/VirtualHost&gt;</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><code>ServerAlias</code>：额外域名  </li>
+<li><code>AllowOverride All</code>：允许目录覆盖 .htaccess</li>
+</ul>
+<h3 id="4-启用并重载"><a href="#4-启用并重载" class="headerlink" title="4. 启用并重载"></a>4. 启用并重载</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> a2ensite vhosts.conf        <span class="hljs-comment"># Debian/Ubuntu</span><br><span class="hljs-built_in">sudo</span> systemctl reload httpd<br></code></pre></td></tr></table></figure>
+
+<h3 id="5-验证"><a href="#5-验证" class="headerlink" title="5. 验证"></a>5. 验证</h3><ul>
+<li>修改本地 hosts 文件 <code>/etc/hosts</code>：<figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs accesslog"><span class="hljs-number">127.0.0.1</span> www.example.com example.com shop.example.com<br></code></pre></td></tr></table></figure></li>
+<li>访问 <code>http://www.example.com</code> 与 <code>http://shop.example.com</code></li>
+</ul>
+<hr>
+<h2 id="三、SSL-TLS-加密"><a href="#三、SSL-TLS-加密" class="headerlink" title="三、SSL&#x2F;TLS 加密"></a>三、SSL&#x2F;TLS 加密</h2><blockquote>
+<p>SSL&#x2F;TLS 提供 HTTPS 加密访问，避免明文传输敏感信息。</p>
+</blockquote>
+<h3 id="1-生成私钥和-CSR"><a href="#1-生成私钥和-CSR" class="headerlink" title="1. 生成私钥和 CSR"></a>1. 生成私钥和 CSR</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> <span class="hljs-built_in">mkdir</span> -p /etc/httpd/ssl<br><span class="hljs-built_in">cd</span> /etc/httpd/ssl<br><span class="hljs-built_in">sudo</span> openssl genpkey -algorithm RSA -out www.example.com.key -pkeyopt rsa_keygen_bits:2048<br><span class="hljs-built_in">sudo</span> openssl req -new -key www.example.com.key -out www.example.com.csr \<br>  -subj <span class="hljs-string">&quot;/C=CN/ST=Beijing/L=Beijing/O=Example Corp/OU=IT/CN=www.example.com&quot;</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><code>genpkey</code>：推荐的生成密钥方法  </li>
+<li>CSR 包含公钥及组织信息</li>
+</ul>
+<h3 id="2-自签名证书生成"><a href="#2-自签名证书生成" class="headerlink" title="2. 自签名证书生成"></a>2. 自签名证书生成</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> openssl x509 -req -days 365 -<span class="hljs-keyword">in</span> www.example.com.csr \<br>  -signkey www.example.com.key -out www.example.com.crt<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><code>-days 365</code>：证书有效期 1 年</li>
+</ul>
+<h3 id="3-安装并启用-SSL-模块"><a href="#3-安装并启用-SSL-模块" class="headerlink" title="3. 安装并启用 SSL 模块"></a>3. 安装并启用 SSL 模块</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> yum install -y mod_ssl       <span class="hljs-comment"># RHEL/CentOS</span><br><span class="hljs-built_in">sudo</span> a2enmod ssl                 <span class="hljs-comment"># Debian/Ubuntu</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="4-配置-HTTPS-虚拟主机"><a href="#4-配置-HTTPS-虚拟主机" class="headerlink" title="4. 配置 HTTPS 虚拟主机"></a>4. 配置 HTTPS 虚拟主机</h3><p>在 <code>vhosts.conf</code> 末尾添加：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-section">&lt;VirtualHost *<span class="hljs-number">:443</span>&gt;</span><br>    <span class="hljs-attribute">ServerName</span> www.example.com<br>    <span class="hljs-attribute">DocumentRoot</span> /var/www/html/example<br>    <span class="hljs-attribute">SSLEngine</span> <span class="hljs-literal">on</span><br>    <span class="hljs-attribute">SSLCertificateFile</span> /etc/httpd/ssl/www.example.com.crt<br>    <span class="hljs-attribute">SSLCertificateKeyFile</span> /etc/httpd/ssl/www.example.com.key<br>    <span class="hljs-section">&lt;Directory /var/www/html/example&gt;</span><br>        <span class="hljs-attribute">Require</span> <span class="hljs-literal">all</span> granted<br>    <span class="hljs-section">&lt;/Directory&gt;</span><br><span class="hljs-section">&lt;/VirtualHost&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="5-防火墙及重启"><a href="#5-防火墙及重启" class="headerlink" title="5. 防火墙及重启"></a>5. 防火墙及重启</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> firewall-cmd --permanent --add-port=443/tcp<br><span class="hljs-built_in">sudo</span> firewall-cmd --reload<br><span class="hljs-built_in">sudo</span> systemctl restart httpd<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="四、常用模块管理"><a href="#四、常用模块管理" class="headerlink" title="四、常用模块管理"></a>四、常用模块管理</h2><h3 id="URL-重写-mod-rewrite"><a href="#URL-重写-mod-rewrite" class="headerlink" title="URL 重写 (mod_rewrite)"></a>URL 重写 (mod_rewrite)</h3><ul>
+<li>启用模块：<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> a2enmod rewrite<br></code></pre></td></tr></table></figure></li>
+<li>核心指令解释：<ul>
+<li><code>RewriteEngine On</code>：打开重写引擎</li>
+<li><code>RewriteRule Pattern Substitution [Flags]</code></li>
+</ul>
+</li>
+</ul>
+<p>.htaccess 示例：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">RewriteEngine</span> <span class="hljs-literal">On</span><br><span class="hljs-attribute">RewriteRule</span> ^old-page\.html$ /new-page.html<span class="hljs-meta"> [R=301,L]</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="路径别名-mod-alias"><a href="#路径别名-mod-alias" class="headerlink" title="路径别名 (mod_alias)"></a>路径别名 (mod_alias)</h3><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">Alias</span> /docs /var/www/shared/docs<br><span class="hljs-section">&lt;Directory /var/www/shared/docs&gt;</span><br>    <span class="hljs-attribute">Options</span> Indexes<br>    <span class="hljs-attribute">Require</span> <span class="hljs-literal">all</span> granted<br><span class="hljs-section">&lt;/Directory&gt;</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><code>Alias</code>：URL 到文件路径映射</li>
+</ul>
+<h3 id="服务器状态监控-mod-status"><a href="#服务器状态监控-mod-status" class="headerlink" title="服务器状态监控 (mod_status)"></a>服务器状态监控 (mod_status)</h3><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-section">&lt;Location /server-status&gt;</span><br>    <span class="hljs-attribute">SetHandler</span> server-status<br>    <span class="hljs-attribute">Require</span> local<br><span class="hljs-section">&lt;/Location&gt;</span><br><span class="hljs-attribute">ExtendedStatus</span> <span class="hljs-literal">On</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><code>ExtendedStatus</code>：收集更详细指标</li>
+</ul>
+<hr>
+<h2 id="五、日志与日志轮转"><a href="#五、日志与日志轮转" class="headerlink" title="五、日志与日志轮转"></a>五、日志与日志轮转</h2><h3 id="自定义日志格式"><a href="#自定义日志格式" class="headerlink" title="自定义日志格式"></a>自定义日志格式</h3><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">LogFormat</span> <span class="hljs-string">&quot;%h %l %u %t \&quot;%r\&quot; %&gt;s %b %D&quot;</span> detailed<br><span class="hljs-attribute">CustomLog</span> /var/log/httpd/access_detailed.log detailed<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><code>%&gt;s</code>：实际返回给客户端的状态码</li>
+<li><code>%b</code>：响应大小（不包含头）</li>
+</ul>
+<h3 id="logrotate-配置"><a href="#logrotate-配置" class="headerlink" title="logrotate 配置"></a>logrotate 配置</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs text">/var/log/httpd/access_detailed.log &#123;<br>    daily<br>    rotate 14<br>    compress<br>    delaycompress<br>    missingok<br>    notifempty<br>    create 640 root adm<br>    postrotate<br>        systemctl reload httpd<br>    endscript<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="六、安全加固"><a href="#六、安全加固" class="headerlink" title="六、安全加固"></a>六、安全加固</h2><h3 id="禁止目录列表"><a href="#禁止目录列表" class="headerlink" title="禁止目录列表"></a>禁止目录列表</h3><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-section">&lt;Directory /var/www/html&gt;</span><br>    <span class="hljs-attribute">Options</span> -Indexes<br><span class="hljs-section">&lt;/Directory&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="限制-IP-访问"><a href="#限制-IP-访问" class="headerlink" title="限制 IP 访问"></a>限制 IP 访问</h3><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-section">&lt;Directory /var/www/html/private&gt;</span><br>    <span class="hljs-attribute">Require</span> ip <span class="hljs-number">192.168.0.0</span>/<span class="hljs-number">24</span><br>    <span class="hljs-attribute">Require</span> <span class="hljs-literal">all</span> denied<br><span class="hljs-section">&lt;/Directory&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="防-DDoS-攻击-mod-evasive"><a href="#防-DDoS-攻击-mod-evasive" class="headerlink" title="防 DDoS 攻击 (mod_evasive)"></a>防 DDoS 攻击 (mod_evasive)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> yum install -y mod_evasive   <span class="hljs-comment"># RHEL/CentOS</span><br><span class="hljs-built_in">sudo</span> apt install -y libapache2-mod-evasive  <span class="hljs-comment"># Debian/Ubuntu</span><br>&lt;IfModule mod_evasive20.c&gt;<br>    DOSHashTableSize    3097<br>    DOSPageCount        2<br>    DOSSiteCount        50<br>    DOSBlockingPeriod   10<br>    DOSLogDir           <span class="hljs-string">&quot;/var/log/mod_evasive&quot;</span><br>&lt;/IfModule&gt;<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="七、性能调优"><a href="#七、性能调优" class="headerlink" title="七、性能调优"></a>七、性能调优</h2><h3 id="Worker-MPM-启用"><a href="#Worker-MPM-启用" class="headerlink" title="Worker MPM 启用"></a>Worker MPM 启用</h3><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-comment"># 注释 prefork</span><br><span class="hljs-comment">#LoadModule mpm_prefork_module modules/mod_mpm_prefork.so</span><br><span class="hljs-attribute">LoadModule</span> mpm_worker_module modules/mod_mpm_worker.so<br></code></pre></td></tr></table></figure>
+
+<h3 id="进程和线程配置"><a href="#进程和线程配置" class="headerlink" title="进程和线程配置"></a>进程和线程配置</h3><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-section">&lt;IfModule mpm_worker_module&gt;</span><br>    <span class="hljs-attribute">StartServers</span>          <span class="hljs-number">3</span><br>    <span class="hljs-attribute">ThreadsPerChild</span>      <span class="hljs-number">25</span><br>    <span class="hljs-attribute">MinSpareThreads</span>      <span class="hljs-number">75</span><br>    <span class="hljs-attribute">MaxSpareThreads</span>     <span class="hljs-number">250</span><br>    <span class="hljs-attribute">MaxRequestWorkers</span>    <span class="hljs-number">1000</span><br>    <span class="hljs-attribute">MaxConnectionsPerChild</span>  <span class="hljs-number">10000</span><br><span class="hljs-section">&lt;/IfModule&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="压缩与缓存"><a href="#压缩与缓存" class="headerlink" title="压缩与缓存"></a>压缩与缓存</h3><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-section">&lt;IfModule mod_deflate.c&gt;</span><br>    <span class="hljs-attribute">AddOutputFilterByType</span> DEFLATE text/html text/css application/javascript image/svg+xml<br><span class="hljs-section">&lt;/IfModule&gt;</span><br><span class="hljs-section">&lt;IfModule mod_expires.c&gt;</span><br>    <span class="hljs-attribute">ExpiresActive</span> <span class="hljs-literal">On</span><br>    <span class="hljs-attribute">ExpiresByType</span> text/css <span class="hljs-string">&quot;access plus 7 days&quot;</span><br>    <span class="hljs-attribute">ExpiresByType</span> application/javascript <span class="hljs-string">&quot;access plus 7 days&quot;</span><br>    <span class="hljs-attribute">ExpiresByType</span> image/* <span class="hljs-string">&quot;access plus 30 days&quot;</span><br><span class="hljs-section">&lt;/IfModule&gt;</span><br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="八、反向代理与负载均衡"><a href="#八、反向代理与负载均衡" class="headerlink" title="八、反向代理与负载均衡"></a>八、反向代理与负载均衡</h2><h3 id="启用模块"><a href="#启用模块" class="headerlink" title="启用模块"></a>启用模块</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> a2enmod proxy proxy_http proxy_balancer lbmethod_byrequests<br></code></pre></td></tr></table></figure>
+
+<h3 id="负载均衡示例"><a href="#负载均衡示例" class="headerlink" title="负载均衡示例"></a>负载均衡示例</h3><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-section">&lt;Proxy <span class="hljs-string">&quot;balancer://backend_cluster&quot;</span>&gt;</span><br>    <span class="hljs-attribute">BalancerMember</span> http://<span class="hljs-number">10.0.0.1:8080</span> loadfactor=<span class="hljs-number">5</span><br>    <span class="hljs-attribute">BalancerMember</span> http://<span class="hljs-number">10.0.0.2:8080</span><br>    <span class="hljs-attribute">ProxySet</span> lbmethod=byrequests stickysession=JSESSIONID<br><span class="hljs-section">&lt;/Proxy&gt;</span><br><br><span class="hljs-section">&lt;VirtualHost *<span class="hljs-number">:80</span>&gt;</span><br>    <span class="hljs-attribute">ServerName</span> api.example.com<br>    <span class="hljs-attribute">ProxyPass</span> <span class="hljs-string">&quot;/api/&quot;</span> <span class="hljs-string">&quot;balancer://backend_cluster/&quot;</span><br>    <span class="hljs-attribute">ProxyPassReverse</span> <span class="hljs-string">&quot;/api/&quot;</span> <span class="hljs-string">&quot;balancer://backend_cluster/&quot;</span><br><span class="hljs-section">&lt;/VirtualHost&gt;</span><br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="九、常见问题与故障排查"><a href="#九、常见问题与故障排查" class="headerlink" title="九、常见问题与故障排查"></a>九、常见问题与故障排查</h2><h3 id="服务启动失败"><a href="#服务启动失败" class="headerlink" title="服务启动失败"></a>服务启动失败</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> systemctl status httpd<br><span class="hljs-built_in">sudo</span> journalctl -xe<br>apachectl configtest<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>检查配置语法、端口占用、权限问题。</li>
+</ul>
+<h3 id="虚拟主机无效"><a href="#虚拟主机无效" class="headerlink" title="虚拟主机无效"></a>虚拟主机无效</h3><ul>
+<li>确认 <code>ServerName</code> 与 <code>ServerAlias</code></li>
+<li>执行 <code>apachectl -S</code> 查看虚拟主机加载情况</li>
+</ul>
+<h3 id="403-Forbidden"><a href="#403-Forbidden" class="headerlink" title="403 Forbidden"></a>403 Forbidden</h3><ul>
+<li>确保 <code>Require all granted</code></li>
+<li>SELinux 上下文：<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> <span class="hljs-built_in">chcon</span> -R -t httpd_sys_content_t /var/www/html<br></code></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="SSL-证书错误"><a href="#SSL-证书错误" class="headerlink" title="SSL 证书错误"></a>SSL 证书错误</h3><ul>
+<li>验证证书有效期与路径：<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">openssl x509 -<span class="hljs-keyword">in</span> www.example.com.crt -noout -dates -subject<br></code></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="重写规则不生效"><a href="#重写规则不生效" class="headerlink" title="重写规则不生效"></a>重写规则不生效</h3><ul>
+<li>查看 <code>.htaccess</code> 权限</li>
+<li>查看错误日志 <code>/var/log/httpd/error_log</code></li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Linxu-Apache/" class="print-no-link">#-Linxu -Apache</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Apache运维综合配置教程</div>
+      <div>http://example.com/2025/05/14/Apache运维综合配置教程/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>ming</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年5月14日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/05/09/Linux%E6%90%AD%E5%BB%BA%E5%92%8C%E9%85%8D%E7%BD%AE-NFS%EF%BC%88Network-File-System%EF%BC%89-CentOS7/" title="Linux搭建和配置 NFS（Network File System）(CentOS7)">
+                        <span class="hidden-mobile">Linux搭建和配置 NFS（Network File System）(CentOS7)</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

@@ -19,22 +19,22 @@
   <meta name="author" content="ming">
   <meta name="keywords" content="">
   
-    <meta name="description" content="最近学习JWT时遇到许多方法显示已弃用,JWT更新速度非常快,网上的教程和AI回复大多缺乏时效性,因此我记录下更新学习的过程;本文参考JWT GitHub首页: https:&#x2F;&#x2F;github.com&#x2F;jwtk&#x2F;jjwt?tab&#x3D;readme-ov-file ;并感谢ChatGPT提供了详尽的解释. JWT基础知识: JWT (JSON Web Token):** 是一种基于JSON的令牌，用于在网">
+    <meta name="description" content="NFS简介:    NFS（Network File System 网络文件服务），是一种基于 TCP&#x2F;IP 传输的网络文件系统协议，最初由 Sun 公司开发。NFS 服务的实现依赖于 RPC（Remote Process Call，远端过程调用）机制，通过使用 NFS 协议，客户机可以像访问本地目录一样访问远程服务器中的共享资源。（远端过程调用：自己没有这种功能，调用别人的功能） NF">
 <meta property="og:type" content="article">
-<meta property="og:title" content="JJWT 0.12.6更新学习">
-<meta property="og:url" content="http://example.com/2024/10/24/JJWT%200.12.6%E6%9B%B4%E6%96%B0%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:title" content="Linux搭建和配置 NFS（Network File System）(CentOS7)">
+<meta property="og:url" content="http://example.com/2025/05/09/Linux%E6%90%AD%E5%BB%BA%E5%92%8C%E9%85%8D%E7%BD%AE-NFS%EF%BC%88Network-File-System%EF%BC%89-CentOS7/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="最近学习JWT时遇到许多方法显示已弃用,JWT更新速度非常快,网上的教程和AI回复大多缺乏时效性,因此我记录下更新学习的过程;本文参考JWT GitHub首页: https:&#x2F;&#x2F;github.com&#x2F;jwtk&#x2F;jjwt?tab&#x3D;readme-ov-file ;并感谢ChatGPT提供了详尽的解释. JWT基础知识: JWT (JSON Web Token):** 是一种基于JSON的令牌，用于在网">
+<meta property="og:description" content="NFS简介:    NFS（Network File System 网络文件服务），是一种基于 TCP&#x2F;IP 传输的网络文件系统协议，最初由 Sun 公司开发。NFS 服务的实现依赖于 RPC（Remote Process Call，远端过程调用）机制，通过使用 NFS 协议，客户机可以像访问本地目录一样访问远程服务器中的共享资源。（远端过程调用：自己没有这种功能，调用别人的功能） NF">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-10-24T01:57:07.000Z">
-<meta property="article:modified_time" content="2025-05-09T03:53:24.242Z">
+<meta property="article:published_time" content="2025-05-09T03:47:29.000Z">
+<meta property="article:modified_time" content="2025-05-09T06:28:47.017Z">
 <meta property="article:author" content="ming">
-<meta property="article:tag" content="-java -Spring -JWT">
+<meta property="article:tag" content="-Linux">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>JJWT 0.12.6更新学习 - Hexo</title>
+  <title>Linux搭建和配置 NFS（Network File System）(CentOS7) - Hexo</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -200,7 +200,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="JJWT 0.12.6更新学习"></span>
+            <span id="subtitle" data-typed-text="Linux搭建和配置 NFS（Network File System）(CentOS7)"></span>
           
         </div>
 
@@ -211,8 +211,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-10-24 09:57" pubdate>
-          2024年10月24日 上午
+        <time datetime="2025-05-09 11:47" pubdate>
+          2025年5月9日 中午
         </time>
       </span>
     
@@ -223,7 +223,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          786 字
+          704 字
         
       </span>
     
@@ -234,7 +234,7 @@
         
         
         
-          7 分钟
+          6 分钟
         
       </span>
     
@@ -271,52 +271,96 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">JJWT 0.12.6更新学习</h1>
+            <h1 id="seo-header">Linux搭建和配置 NFS（Network File System）(CentOS7)</h1>
             
             
               <div class="markdown-body">
                 
-                <p>最近学习JWT时遇到许多方法显示已弃用,JWT更新速度非常快,网上的教程和AI回复大多缺乏时效性,因此我记录下更新学习的过程;本文参考JWT GitHub首页:</p>
-<p><a target="_blank" rel="noopener" href="https://github.com/jwtk/jjwt?tab=readme-ov-file">https://github.com/jwtk/jjwt?tab=readme-ov-file</a></p>
-<p>;并感谢ChatGPT提供了详尽的解释.</p>
-<p>JWT基础知识:</p>
-<p><strong>JWT (JSON Web Token)</strong>:** 是一种基于JSON的令牌，用于在网络应用中安全地传输信息。它通常用于身份验证和授权。JWT由三部分组成：<code>Header</code>、<code>Payload</code> 和 <code>Signature</code>，通过点号（<code>.</code>）分隔。JWT可以确保数据的完整性（不可篡改）并通过加密保证敏感信息的安全。</p>
-<table>
-<thead>
-<tr>
-<th align="left"><strong>部分</strong></th>
-<th><strong>描述</strong></th>
-<th><strong>示例</strong></th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left"><strong>Header</strong></td>
-<td>定义了JWT的元数据，主要包括签名算法和令牌类型。</td>
-<td><code>json&lt;br&gt;&#123; &quot;alg&quot;: &quot;HS256&quot;,&lt;br&gt; &quot;typ&quot;: &quot;JWT&quot;&#125;</code></td>
-</tr>
-<tr>
-<td align="left"><strong>Payload</strong></td>
-<td>包含实际传递的数据（声明），可以包括注册声明、公共声明和私有声明。</td>
-<td><code>json&#123; &quot;sub&quot;: &quot;1234567890&quot;, &quot;name&quot;: &quot;John Doe&quot;,&quot;admin&quot;: true, &quot;exp&quot;: 1516239022&lt;br&gt;&#125;</code></td>
-</tr>
-<tr>
-<td align="left"><strong>Signature</strong></td>
-<td>用于验证JWT的完整性和真实性，通过对Header和Payload进行签名生成。</td>
-<td><code>HMACSHA256(base64UrlEncode(Header) + &quot;.&quot; + base64UrlEncode(Payload), secret)</code></td>
-</tr>
-</tbody></table>
-<p><strong>JJWT(Java JWT)</strong>:** 是一个Java库，用于创建和验证JWT（JSON Web Token）。它简化了在Java应用中使用JWT的过程。JJWT由一个开源社区开发，支持生成、解析和验证JWT的功能。本文学习的是最新的JJWT。</p>
-<p><strong>JWS(JSON Web Signature):</strong> 是一种用来生成和验证数字签名的标准，基于JSON格式。JWS确保了数据的完整性和真实性。JWT的签名部分实际上就是使用了JWS。</p>
-<p><strong>JWE(JSON Web Encryption)</strong>: 是一种用来加密数据的标准，也基于JSON格式。JWE与JWS不同之处在于，JWS保证数据的完整性（数据不可篡改），而JWE确保数据的机密性（数据加密后不可被读取）。</p>
-<p>1.引入依赖</p>
-<p>引入JWT最新的maven依赖:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs java">&lt;dependency&gt;<br>  &lt;groupId&gt;io.jsonwebtoken&lt;/groupId&gt;<br>  &lt;artifactId&gt;jjwt-api&lt;/artifactId&gt;<br>  &lt;version&gt;<span class="hljs-number">0.12</span><span class="hljs-number">.6</span>&lt;/version&gt;<br>&lt;/dependency&gt;<br>&lt;dependency&gt;<br>  &lt;groupId&gt;io.jsonwebtoken&lt;/groupId&gt;<br>  &lt;artifactId&gt;jjwt-impl&lt;/artifactId&gt;<br>  &lt;version&gt;<span class="hljs-number">0.12</span><span class="hljs-number">.6</span>&lt;/version&gt;<br>  &lt;scope&gt;runtime&lt;/scope&gt;<br>&lt;/dependency&gt;<br>&lt;dependency&gt;<br>  &lt;groupId&gt;io.jsonwebtoken&lt;/groupId&gt;<br>  &lt;artifactId&gt;jjwt-jackson&lt;/artifactId&gt; &lt;!-- or jjwt-gson <span class="hljs-keyword">if</span> Gson is preferred --&gt;<br>  &lt;version&gt;<span class="hljs-number">0.12</span><span class="hljs-number">.6</span>&lt;/version&gt;<br>  &lt;scope&gt;runtime&lt;/scope&gt;<br>&lt;/dependency&gt;<br></code></pre></td></tr></table></figure>
+                <p>NFS简介:<br>    NFS（Network File System 网络文件服务），是一种基于 TCP&#x2F;IP 传输的网络文件系统协议，最初由 Sun 公司开发。<br>NFS 服务的实现依赖于 RPC（Remote Process Call，远端过程调用）机制，通过使用 NFS 协议，客户机可以像访问本地目录一样访问远程服务器中的共享资源。（远端过程调用：自己没有这种功能，调用别人的功能） NFS 也是 NAS 存储 设备必然支持的一种协议，以完成远程到本地的映射过程。(NAS—-Network Attached Storage：网络附属存储NFS是NAS的一种)</p>
+<h2 id="服务端配置"><a href="#服务端配置" class="headerlink" title="服务端配置:"></a>服务端配置:</h2><h3 id="1-安装-NFS-服务"><a href="#1-安装-NFS-服务" class="headerlink" title="1. 安装 NFS 服务"></a>1. 安装 NFS 服务</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">yum install -y nfs-utils<br></code></pre></td></tr></table></figure>
 
-<p>2.生成JWS</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 生成一个HS256算法的密钥</span><br><span class="hljs-type">SecretKey</span> <span class="hljs-variable">key</span> <span class="hljs-operator">=</span> Jwts.SIG.HS256.key().build();<br><br><span class="hljs-type">String</span> <span class="hljs-variable">jws</span> <span class="hljs-operator">=</span> Jwts.builder()<br>           <span class="hljs-comment">// 设置JWT的主体部分，通常包含用户标识</span><br>           .subject(<span class="hljs-string">&quot;sub&quot;</span>) <br>           <br>           <span class="hljs-comment">// 添加自定义声明</span><br>           .claim(<span class="hljs-string">&quot;msg&quot;</span>,<span class="hljs-string">&quot;message&quot;</span>)<br>           <br>           <span class="hljs-comment">// 生成的密钥对JWT进行签名</span><br>           .signWith(key)<br>           <br>           <span class="hljs-comment">// 设置JWT的发行者信息</span><br>           .issuer(<span class="hljs-string">&quot;example.com&quot;</span>)<br>           <br>           <span class="hljs-comment">// 设置JWT的发行时间</span><br>           .issuedAt(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>(System.currentTimeMillis()))<br>           <br>           <span class="hljs-comment">// 设置JWT的过期时间，这里设置为当前时间加1小时</span><br>           .expiration(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>(System.currentTimeMillis() + <span class="hljs-number">3600000</span>))<br>           <br>           <span class="hljs-comment">//生成最终的JWT字符串</span><br>           .compact();<br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="2-创建共享目录"><a href="#2-创建共享目录" class="headerlink" title="2.创建共享目录"></a>2.创建共享目录</h3><p>确保服务器（NFS Server）与客户端（NFS Client）能够相互 ping 通。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ping &lt;对方ip&gt;<br></code></pre></td></tr></table></figure>
 
-<p>3.解析JWS</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java">Jws&lt;Claims&gt; claimsJws = Jwts.parser()<br>        <span class="hljs-comment">// 使用指定的密钥验证JWT的签名</span><br>        .verifyWith(key)<br>        .build()<br>        <span class="hljs-comment">// 解析JWT并验证其签名，返回包含claims的Jws对象</span><br>        .parseSignedClaims(jws);<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>若ping不通可执行以下操作:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">setenforce 0 <span class="hljs-comment">#关闭防火墙安全模块</span><br>systemctl stop firewalld <span class="hljs-comment">#停止防火墙服务</span><br>systemctl <span class="hljs-built_in">disable</span> firewalld <span class="hljs-comment">#禁用开机启动防火墙</span><br><span class="hljs-built_in">sudo</span> setenforce 0  <span class="hljs-comment">#临时关闭 SELinux</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="3-创建共享目录"><a href="#3-创建共享目录" class="headerlink" title="3. 创建共享目录"></a>3. 创建共享目录</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">mkdir</span> -p /srv/nfs/shared<br><span class="hljs-built_in">chmod</span> 777 /srv/nfs/shared<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>解释</strong>：</p>
+<ul>
+<li><code>mkdir -p</code>：创建目录及其上级目录。</li>
+<li><code>chmod 777</code>：设置目录为所有用户可读写执行（测试环境使用，生产可根据需要收紧权限）。</li>
+</ul>
+</blockquote>
+<h3 id="4-编辑导出配置"><a href="#4-编辑导出配置" class="headerlink" title="4. 编辑导出配置"></a>4. 编辑导出配置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cat</span> &gt;&gt; /etc/exports &lt;&lt; <span class="hljs-string">EOF</span><br><span class="hljs-string">/srv/nfs/shared   192.168.1.0/24(rw,no_root_squash,sync)</span><br><span class="hljs-string">EOF</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>解释</strong>：</p>
+<ul>
+<li><code>/srv/nfs/shared</code>：本地要共享的目录。</li>
+<li><code>192.168.1.0/24</code>：允许访问的客户端网段（可改为单 IP，如 <code>192.168.1.100</code>）。</li>
+<li><code>rw</code>：允许读写。</li>
+<li><code>no_root_squash</code>：客户端以 root 身份访问时，不映射为匿名用户（慎用）。</li>
+<li><code>sync</code>：写操作以同步方式进行，保证数据完整性。</li>
+</ul>
+</blockquote>
+<h3 id="5-启动并设置服务开机自启"><a href="#5-启动并设置服务开机自启" class="headerlink" title="5. 启动并设置服务开机自启"></a>5. 启动并设置服务开机自启</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">systemctl <span class="hljs-built_in">enable</span> --now nfs-server<br>systemctl <span class="hljs-built_in">enable</span> --now rpcbind<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>解释</strong>：</p>
+<ul>
+<li><code>nfs-server</code>：NFS 服务主体。</li>
+<li><code>rpcbind</code>：RPC 服务框架，对 NFS 工作必需。</li>
+<li><code>--now</code>：立即启动并开机自启。</li>
+</ul>
+</blockquote>
+<h3 id="6-刷新导出表并查看"><a href="#6-刷新导出表并查看" class="headerlink" title="6. 刷新导出表并查看"></a>6. 刷新导出表并查看</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">exportfs -r<br>exportfs -v<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>解释</strong>：</p>
+<ul>
+<li><code>exportfs -r</code>：重新导出 <code>/etc/exports</code> 中的所有条目。</li>
+<li><code>exportfs -v</code>：查看当前导出的共享及其选项。</li>
+</ul>
+</blockquote>
+<h2 id="客户端配置"><a href="#客户端配置" class="headerlink" title="客户端配置:"></a>客户端配置:</h2><h3 id="1-安装-NFS-客户端工具"><a href="#1-安装-NFS-客户端工具" class="headerlink" title="1. 安装 NFS 客户端工具"></a>1. 安装 NFS 客户端工具</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">yum install -y nfs-utils<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-创建挂载点"><a href="#2-创建挂载点" class="headerlink" title="2. 创建挂载点"></a>2. 创建挂载点</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">mkdir</span> -p /mnt/nfs/shared<br></code></pre></td></tr></table></figure>
+
+<h3 id="3-手动挂载（测试）"><a href="#3-手动挂载（测试）" class="headerlink" title="3. 手动挂载（测试）"></a>3. 手动挂载（测试）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">mount -t nfs 192.168.1.10:/srv/nfs/shared /mnt/nfs/shared<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>解释</strong>：</p>
+<ul>
+<li><code>-t nfs</code>：指定文件系统类型为 NFS。</li>
+<li><code>192.168.1.10:/srv/nfs/shared</code>：服务端 IP 与导出目录。</li>
+<li><code>/mnt/nfs/shared</code>：本地挂载点。</li>
+</ul>
+</blockquote>
+<p><strong>验证挂载：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">df</span> -h | grep nfs<br>showmount -e 192.168.1.10<br></code></pre></td></tr></table></figure>
+
+<h3 id="4-持久化挂载（开机自动挂载）"><a href="#4-持久化挂载（开机自动挂载）" class="headerlink" title="4. 持久化挂载（开机自动挂载）"></a>4. 持久化挂载（开机自动挂载）</h3><p>编辑 <code>/etc/fstab</code>，添加一行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">192.168.1.10:/srv/nfs/shared   /mnt/nfs/shared   nfs   defaults,_netdev  0 0<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>解释</strong>：</p>
+<ul>
+<li><code>defaults</code>：使用默认挂载选项（rw, suid, dev, exec, auto, nouser, async）。</li>
+<li><code>_netdev</code>：表示网络文件系统，在网络起后再挂载，防止开机时网络未就绪导致挂载失败。</li>
+</ul>
+</blockquote>
+<p>然后执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">mount -a<br></code></pre></td></tr></table></figure>
+
+<p>检查无误即可。</p>
+<hr>
+<h2 id="四、测试"><a href="#四、测试" class="headerlink" title="四、测试"></a>四、测试</h2><ol>
+<li><p><strong>读写测试</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;hello NFS&quot;</span> &gt; /mnt/nfs/shared/test.txt<br><span class="hljs-built_in">cat</span> /mnt/nfs/shared/test.txt<br></code></pre></td></tr></table></figure></li>
+</ol>
 
                 
               </div>
@@ -329,7 +373,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/java-Spring-JWT/" class="print-no-link">#-java -Spring -JWT</a>
+        <a href="/tags/Linux/" class="print-no-link">#-Linux</a>
       
     </div>
   
@@ -341,8 +385,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>JJWT 0.12.6更新学习</div>
-      <div>http://example.com/2024/10/24/JJWT 0.12.6更新学习/</div>
+      <div>Linux搭建和配置 NFS（Network File System）(CentOS7)</div>
+      <div>http://example.com/2025/05/09/Linux搭建和配置-NFS（Network-File-System）-CentOS7/</div>
     </div>
     <div class="license-meta">
       
@@ -354,7 +398,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年10月24日</div>
+          <div>2025年5月9日</div>
         </div>
       
       
@@ -386,9 +430,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/10/27/WSL2%E5%AE%89%E8%A3%85docker%E5%92%8C%E9%85%8D%E7%BD%AEdocker-compose%E5%B9%B6%E7%BC%96%E6%8E%92%E6%9C%8D%E5%8A%A1/" title="WSL2安装docker和配置docker compose并编排服务">
+                      <a href="/2025/05/14/Apache%E8%BF%90%E7%BB%B4%E7%BB%BC%E5%90%88%E9%85%8D%E7%BD%AE%E6%95%99%E7%A8%8B/" title="Apache运维综合配置教程">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">WSL2安装docker和配置docker compose并编排服务</span>
+                        <span class="hidden-mobile">Apache运维综合配置教程</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -396,8 +440,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/10/24/Spring-Vue3%E5%AE%9E%E7%8E%B0ToDoList%E5%BE%85%E5%8A%9E%E4%BA%8B%E9%A1%B9%E5%88%97%E8%A1%A8/" title="Spring  Vue3实现ToDoList待办事项列表">
-                        <span class="hidden-mobile">Spring  Vue3实现ToDoList待办事项列表</span>
+                      <a href="/2025/04/29/%E6%90%AD%E5%BB%BA%E7%A3%81%E7%9B%98%E9%98%B5%E5%88%97%EF%BC%88RAID%EF%BC%89/" title="搭建磁盘阵列（RAID）">
+                        <span class="hidden-mobile">搭建磁盘阵列（RAID）</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

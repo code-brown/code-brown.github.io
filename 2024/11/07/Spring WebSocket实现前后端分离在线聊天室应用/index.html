@@ -29,7 +29,7 @@
 <meta property="og:image" content="http://example.com/images/01.png">
 <meta property="og:image" content="http://example.com/images/02.png">
 <meta property="article:published_time" content="2024-11-07T08:12:48.000Z">
-<meta property="article:modified_time" content="2024-11-28T09:33:34.244Z">
+<meta property="article:modified_time" content="2025-02-12T12:52:22.542Z">
 <meta property="article:author" content="ming">
 <meta property="article:tag" content="Spring">
 <meta property="article:tag" content="Vue">
@@ -313,7 +313,6 @@
 
 <p><code>ChatHandler</code> 是一个继承自 <code>TextWebSocketHandler</code> 的类，专门用于处理 WebSocket 连接的消息和事件。它负责管理客户端的连接、接收消息、并将消息广播给所有已连接的客户端。这个类实现了 WebSocket 通信的基础功能，如连接管理、消息处理和会话关闭处理。</p>
 <ul>
-<li><ul>
 <li><h4 id="1-sessions-列表"><a href="#1-sessions-列表" class="headerlink" title="1. sessions 列表"></a>1. <code>sessions</code> 列表</h4><ul>
 <li><strong>描述</strong>：这是一个 <code>List&lt;WebSocketSession&gt;</code>，用于保存所有当前活动的 WebSocket 会话。每当客户端建立 WebSocket 连接时，当前会话将被添加到这个列表中，当客户端断开连接时，会从这个列表中移除。它确保消息能够被广播到所有连接中的客户端。</li>
 </ul>
@@ -327,8 +326,6 @@
 </ul>
 <h4 id="4-afterConnectionClosed-WebSocketSession-session-CloseStatus-status"><a href="#4-afterConnectionClosed-WebSocketSession-session-CloseStatus-status" class="headerlink" title="4. afterConnectionClosed(WebSocketSession session, CloseStatus status)"></a>4. <code>afterConnectionClosed(WebSocketSession session, CloseStatus status)</code></h4><ul>
 <li><strong>描述</strong>：当 WebSocket 连接关闭时调用此方法。此时，服务器会将关闭的客户端会话对象 <code>session</code> 从 <code>sessions</code> 列表中移除。清理已经断开的客户端连接，确保 <code>sessions</code> 列表中只包含当前活跃的 WebSocket 会话。</li>
-</ul>
-</li>
 </ul>
 </li>
 </ul>
