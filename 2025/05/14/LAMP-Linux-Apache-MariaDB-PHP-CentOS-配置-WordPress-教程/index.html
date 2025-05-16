@@ -1,0 +1,679 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="ming">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="在 CentOS 上使用 LAMP（Linux, Apache, MariaDB, PHP）环境部署 WordPress。 1. 系统与环境准备1sudo yum update -y  2. 安装 Apache（HTTPD）1234sudo yum install httpd -ysudo systemctl start httpdsudo systemctl enable httpdsudo s">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LAMP(Linux, Apache, MariaDB, PHP) 配置 WordPress 教程">
+<meta property="og:url" content="http://example.com/2025/05/14/LAMP-Linux-Apache-MariaDB-PHP-CentOS-%E9%85%8D%E7%BD%AE-WordPress-%E6%95%99%E7%A8%8B/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="在 CentOS 上使用 LAMP（Linux, Apache, MariaDB, PHP）环境部署 WordPress。 1. 系统与环境准备1sudo yum update -y  2. 安装 Apache（HTTPD）1234sudo yum install httpd -ysudo systemctl start httpdsudo systemctl enable httpdsudo s">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-05-14T08:56:31.000Z">
+<meta property="article:modified_time" content="2025-05-16T02:30:42.233Z">
+<meta property="article:author" content="ming">
+<meta property="article:tag" content="linux">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>LAMP(Linux, Apache, MariaDB, PHP) 配置 WordPress 教程 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":80,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="LAMP(Linux, Apache, MariaDB, PHP) 配置 WordPress 教程"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-05-14 16:56" pubdate>
+          2025年5月14日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          521 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          5 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">LAMP(Linux, Apache, MariaDB, PHP) 配置 WordPress 教程</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>在 CentOS 上使用 LAMP（Linux, Apache, MariaDB, PHP）环境部署 WordPress。</p>
+<h2 id="1-系统与环境准备"><a href="#1-系统与环境准备" class="headerlink" title="1. 系统与环境准备"></a>1. 系统与环境准备</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> yum update -y<br></code></pre></td></tr></table></figure>
+
+<h2 id="2-安装-Apache（HTTPD）"><a href="#2-安装-Apache（HTTPD）" class="headerlink" title="2. 安装 Apache（HTTPD）"></a>2. 安装 Apache（HTTPD）</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> yum install httpd -y<br><span class="hljs-built_in">sudo</span> systemctl start httpd<br><span class="hljs-built_in">sudo</span> systemctl <span class="hljs-built_in">enable</span> httpd<br><span class="hljs-built_in">sudo</span> systemctl status httpd<br></code></pre></td></tr></table></figure>
+
+<h2 id="3-安装并配置-MariaDB（MySQL）"><a href="#3-安装并配置-MariaDB（MySQL）" class="headerlink" title="3. 安装并配置 MariaDB（MySQL）"></a>3. 安装并配置 MariaDB（MySQL）</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> yum install mariadb-server mariadb -y<br><span class="hljs-built_in">sudo</span> systemctl start mariadb<br><span class="hljs-built_in">sudo</span> systemctl <span class="hljs-built_in">enable</span> mariadb<br><span class="hljs-built_in">sudo</span> mysql_secure_installation<br></code></pre></td></tr></table></figure>
+
+<p>“需要先删除MySQL”</p>
+<h2 id="4-安装-PHP-及常用扩展"><a href="#4-安装-PHP-及常用扩展" class="headerlink" title="4. 安装 PHP 及常用扩展"></a>4. 安装 PHP 及常用扩展</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> yum install epel-release yum-utils -y<br><span class="hljs-built_in">sudo</span> yum install http://rpms.remirepo.net/enterprise/remi-release-7.rpm -y<br><span class="hljs-built_in">sudo</span> yum-config-manager --<span class="hljs-built_in">enable</span> remi-php73<br><span class="hljs-built_in">sudo</span> yum install php php-mysqlnd php-fpm php-gd php-xml php-mbstring php-opcache php-json php-intl -y<br><span class="hljs-built_in">sudo</span> systemctl restart httpd<br></code></pre></td></tr></table></figure>
+
+<p>创建 info.php 测试页：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span> <span class="hljs-title function_ invoke__">phpinfo</span>(); <span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="5-配置防火墙与-SELinux（可选）"><a href="#5-配置防火墙与-SELinux（可选）" class="headerlink" title="5. 配置防火墙与 SELinux（可选）"></a>5. 配置防火墙与 SELinux（可选）</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> firewall-cmd --permanent --add-service=http<br><span class="hljs-built_in">sudo</span> firewall-cmd --permanent --add-service=https<br><span class="hljs-built_in">sudo</span> firewall-cmd --reload<br><span class="hljs-built_in">sudo</span> yum install policycoreutils-python-utils -y<br><span class="hljs-built_in">sudo</span> semanage fcontext -a -t httpd_sys_rw_content_t <span class="hljs-string">&quot;/var/www/html/wordpress(/.*)?&quot;</span><br><span class="hljs-built_in">sudo</span> restorecon -Rv /var/www/html/wordpress<br></code></pre></td></tr></table></figure>
+
+<h2 id="6-下载并部署-WordPress"><a href="#6-下载并部署-WordPress" class="headerlink" title="6. 下载并部署 WordPress"></a>6. 下载并部署 WordPress</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cd</span> /tmp<br>wget https://wordpress.org/latest.tar.gz<br>tar -zxvf latest.tar.gz<br><span class="hljs-built_in">sudo</span> <span class="hljs-built_in">mv</span> wordpress /var/www/html/<br><span class="hljs-built_in">sudo</span> <span class="hljs-built_in">chown</span> -R apache:apache /var/www/html/wordpress<br><span class="hljs-built_in">sudo</span> find /var/www/html/wordpress -<span class="hljs-built_in">type</span> d -<span class="hljs-built_in">exec</span> <span class="hljs-built_in">chmod</span> 755 &#123;&#125; \;<br><span class="hljs-built_in">sudo</span> find /var/www/html/wordpress -<span class="hljs-built_in">type</span> f -<span class="hljs-built_in">exec</span> <span class="hljs-built_in">chmod</span> 644 &#123;&#125; \;<br></code></pre></td></tr></table></figure>
+
+<h2 id="7-创建-WordPress-数据库与用户"><a href="#7-创建-WordPress-数据库与用户" class="headerlink" title="7. 创建 WordPress 数据库与用户"></a>7. 创建 WordPress 数据库与用户</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CREATE</span> DATABASE wpdb <span class="hljs-type">CHARACTER</span> <span class="hljs-keyword">SET</span> utf8mb4 <span class="hljs-keyword">COLLATE</span> utf8mb4_general_ci;<br><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">USER</span> <span class="hljs-string">&#x27;wpuser&#x27;</span>@<span class="hljs-string">&#x27;localhost&#x27;</span> IDENTIFIED <span class="hljs-keyword">BY</span> <span class="hljs-string">&#x27;wppassword&#x27;</span>;<br><span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">ALL</span> PRIVILEGES <span class="hljs-keyword">ON</span> wpdb.<span class="hljs-operator">*</span> <span class="hljs-keyword">TO</span> <span class="hljs-string">&#x27;wpuser&#x27;</span>@<span class="hljs-string">&#x27;localhost&#x27;</span>;<br>FLUSH PRIVILEGES;<br></code></pre></td></tr></table></figure>
+
+<h2 id="8-配置-Apache-虚拟主机"><a href="#8-配置-Apache-虚拟主机" class="headerlink" title="8. 配置 Apache 虚拟主机"></a>8. 配置 Apache 虚拟主机</h2><p>创建 <code>/etc/httpd/conf.d/wordpress.conf</code>：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-section">&lt;VirtualHost *<span class="hljs-number">:80</span>&gt;</span><br>    <span class="hljs-attribute">ServerName</span> example.com<br>    <span class="hljs-attribute">DocumentRoot</span> /var/www/html/wordpress<br><br>    <span class="hljs-section">&lt;Directory /var/www/html/wordpress&gt;</span><br>        <span class="hljs-attribute">Options</span> Indexes FollowSymLinks<br>        <span class="hljs-attribute">AllowOverride</span> <span class="hljs-literal">All</span><br>        <span class="hljs-attribute">Require</span> <span class="hljs-literal">all</span> granted<br>    <span class="hljs-section">&lt;/Directory&gt;</span><br><br>    <span class="hljs-attribute">ErrorLog</span> /var/log/httpd/wordpress_error.log<br>    <span class="hljs-attribute">CustomLog</span> /var/log/httpd/wordpress_access.log combined<br><span class="hljs-section">&lt;/VirtualHost&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>Directory:声明这是一个针对目录 <code>/var/www/html/wordpress</code> 的配置块。</p>
+<p>**<code>Options Indexes FollowSymLinks</code>**：设置该目录的访问行为;</p>
+<p><code>Indexes</code>：如果目录中没有 <code>index.html</code>&#x2F;<code>index.php</code> 文件，<strong>显示目录列表</strong></p>
+<p><code>FollowSymLinks</code>：允许<strong>跟踪符号链接</strong></p>
+<p><strong><code>AllowOverride All</code></strong>:允许该目录下的 <code>.htaccess</code> 文件<strong>覆盖全局配置</strong>。</p>
+<ul>
+<li>WordPress 依赖 <code>.htaccess</code> 实现固定链接（Permalinks）等功能，因此需要设为 <code>All</code>。</li>
+<li>若无需动态配置，可设为 <code>None</code>（更安全，但 WordPress 会无法正常工作）。</li>
+</ul>
+<p><strong><code>Require all granted</code></strong></p>
+<ul>
+<li><strong>作用</strong>：允许<strong>所有用户</strong>访问该目录</li>
+<li>其他常见值<ul>
+<li><code>Require valid-user</code>：需密码认证（配合 Auth 模块使用）。</li>
+<li><code>Require ip 192.168.1.0/24</code>：仅允许特定 IP 段访问。</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> systemctl restart httpd<br></code></pre></td></tr></table></figure>
+
+<h2 id="9-完成-WordPress-安装向导"><a href="#9-完成-WordPress-安装向导" class="headerlink" title="9. 完成 WordPress 安装向导"></a>9. 完成 WordPress 安装向导</h2><ul>
+<li>浏览器访问 <code>http://your_server_ip/</code>。</li>
+<li>按提示填写数据库、站点、管理员账户等信息。</li>
+<li>安装完成后登录后台。</li>
+</ul>
+<h2 id="10-常见故障排查"><a href="#10-常见故障排查" class="headerlink" title="10. 常见故障排查"></a>10. 常见故障排查</h2><ul>
+<li><strong>403 Forbidden</strong>：检查目录权限和 SELinux。</li>
+<li><strong>500 错误</strong>：查看 Apache 错误日志。</li>
+<li><strong>数据库连接失败</strong>：检查 <code>wp-config.php</code> 和数据库状态。</li>
+<li><strong>上传失败</strong>：确认目录写权限，SELinux 设置。</li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/linux/" class="print-no-link">#linux</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>LAMP(Linux, Apache, MariaDB, PHP) 配置 WordPress 教程</div>
+      <div>http://example.com/2025/05/14/LAMP-Linux-Apache-MariaDB-PHP-CentOS-配置-WordPress-教程/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>ming</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年5月14日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/05/15/Linux%E7%A1%AC%E7%9B%98%E7%BB%BC%E5%90%88%E9%85%8D%E7%BD%AE/" title="Linux硬盘综合配置">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Linux硬盘综合配置</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/05/14/Apache%E8%BF%90%E7%BB%B4%E7%BB%BC%E5%90%88%E9%85%8D%E7%BD%AE%E6%95%99%E7%A8%8B/" title="Apache运维综合配置教程">
+                        <span class="hidden-mobile">Apache运维综合配置教程</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
